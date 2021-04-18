@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 bs4 = "*"
 requests = "*"
+tweepy = "*"
 
 [dev-packages]
 ipython = "*"

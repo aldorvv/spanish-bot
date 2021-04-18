@@ -3,7 +3,7 @@ import os
 
 class Driver:
 
-    def __init__(self, db_name: str):
+    def __init__(self):
         self.__conn = sqlite3.connect(os.getenv('WORDS_DB'))
         self.cursor = self.__conn.cursor()
 
