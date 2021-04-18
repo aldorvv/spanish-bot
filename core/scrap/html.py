@@ -20,11 +20,12 @@ class Scrapper:
         meaning = soup.select('.j')
 
         if et and meaning:
-            str_meaning = meaning[0].text[:-1] if meaning[0].text[-1].isdigit() else meaning[0].text
-            return f'{word}\n{et[0].text}\n{str_meaning}'
+            str_meaning = ''.join([letter for letter in meaning[0].text if not letter.isdigit()])
+            str_et = ''.join([letter for letter in et[0].text if not letter.isdigit()])
+            return f'{word}\n{str_et}\n{str_meaning}'
         
         if not et and meaning:
-            str_meaning = meaning[0].text[:-1] if meaning[0].text[-1].isdigit() else meaning[0].text
+            str_meaning = ''.join([letter for letter in meaning[0].text if not letter.isdigit()])
             return f'{word}\n{str_meaning}'
 
         return ''
