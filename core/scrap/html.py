@@ -15,15 +15,17 @@ class Scrapper:
     def get_info(self, word: str) -> str:
 
         html_response = self.__get_html(word)
-        soup = BeautifulSoup(html_response)
+        soup = BeautifulSoup(html_response, features="html.parser")
         et = soup.select('.n2')
         meaning = soup.select('.j')
 
         if et and meaning:
-            return f'{word}\n{et[0].text}\n{meaning[0].text}'
+            str_meaning = meaning[0].text[:-1] if meaning[0].text[-1].isdigit() else meaning[0].text
+            return f'{word}\n{et[0].text}\n{str_meaning}'
         
         if not et and meaning:
-            return f'{word}\n{meaning[0].text}'
+            str_meaning = meaning[0].text[:-1] if meaning[0].text[-1].isdigit() else meaning[0].text
+            return f'{word}\n{str_meaning}'
 
         return ''
 

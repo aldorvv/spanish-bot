@@ -1,4 +1,5 @@
 import os
+from typing import Tuple
 
 import tweepy
 
@@ -20,16 +21,20 @@ class Bot:
         self.db = Driver()
         self.scrap = Scrapper()
 
-    def get_content(self) -> str:
+    def get_content(self) -> Tuple[str, str]:
         word = self.db.get_word()
-        self.scrap.get_info(word)
+        return word, self.scrap.get_info(word)
 
-    def tweet_word(self, word: str, max_retries: int = 10) -> bool:
-        content = self.get_content()
+    def tweet_word(self, max_retries: int = 10) -> Tuple[str, bool]:
+        word, content = self.get_content()
     
         attempt = 0
-        while (not content and attempt < max_retries):
+        while (not content and attempt <= max_retries): 
             content = self.get_content()
             attempt += 1
 
-        self.api.update_status(content)
+        try:
+            self.api.update_status(content)
+            return f'Successfully tweeted {word}', True
+        except Exception as e:
+            return f'Error while tweeting {word} Error: {e}', False

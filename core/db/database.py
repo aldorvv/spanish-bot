@@ -8,12 +8,12 @@ class Driver:
         self.cursor = self.__conn.cursor()
 
     def get_word(self, delete_from_db: bool = True) -> str:
-        table = s.getenv('WORDS_TABLE')
+        table = os.getenv('WORDS_TABLE')
         self.cursor.execute(f'SELECT * FROM {table} ORDER BY RANDOM() LIMIT 1;')
         word, = self.cursor.fetchone()
 
         if delete_from_db:
-            self.cursor.execute(f'DELETE FROM {table} WHERE word='{word}')
+            self.cursor.execute(f'DELETE FROM {table} WHERE word="{word}"')
             self.__conn.commit()
 
         return word

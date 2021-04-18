@@ -131,3 +131,4 @@ dmypy.json
 *.txt
 init.py
 .vscode
+.env
