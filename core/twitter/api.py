@@ -27,6 +27,8 @@ class Bot:
 
     def tweet_word(self, max_retries: int = 10) -> Tuple[str, bool]:
         word, content = self.get_content()
+        if not isinstance(content, str):
+            return f'Error while tweeting {word} Error: {e}', False
     
         attempt = 0
         while (not content and attempt <= max_retries): 
